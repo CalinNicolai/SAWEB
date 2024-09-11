@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # PHP и Composer
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php_app
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:8000"  # Проброс порта
+    command: bash -c "composer install && php -S 0.0.0.0:8000 -t public"
+    networks:
+      - app_network
+
+  # MySQL
+  db:
+    image: mysql:5.7
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  # Adminer
+  adminer:
+    image: adminer
+    container_name: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  db_data:

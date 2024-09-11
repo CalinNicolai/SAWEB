@@ -1,0 +1,19 @@
+{
+    "name": "calinn/saweb",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Calinn\\Saweb\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Calin Nicolai",
+            "email": "kalinnikolay02@gmail.com"
+        }
+    ],
+    "require": {
+      "ext-pdo": "*",
+      "ext-mysqli": "*"
+    }
+}
