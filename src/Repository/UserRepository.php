@@ -80,33 +80,14 @@ class UserRepository
     public function login(string $login, string $password)
     {
         try {
-            // Создаем соединение с базой данных
-            $conn = new mysqli('db', 'user', 'user_password', 'my_database');
-
-            // Проверяем соединение
-            if ($conn->connect_error) {
-                throw new \RuntimeException("Connection failed: " . $conn->connect_error);
-            }
-
-            // Небезопасное включение переменных в запрос
-            $query = "SELECT * FROM users WHERE login = '$login' AND password = '$password'";
-            // Выполняем запрос
-            $result = $conn->query($query);
-
-            if ($result === false) {
-                throw new \RuntimeException("Query failed: " . $conn->error);
-            }
-
-            // Получаем данные
-            $stmt = $result->fetch_assoc();
-
-            // Закрываем соединение
-            $conn->close();
-
-            return $stmt;
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-            return null;
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE login = :login AND password = :password");
+            $stmt->bindParam(':login', $login, PDO::PARAM_STR_CHAR);
+            $stmt->bindParam(':password', $password, PDO::PARAM_STR_CHAR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result === false ? null : $result;
+        } catch (Exception) {
+            echo 'Incorrect login or password';
         }
     }
 

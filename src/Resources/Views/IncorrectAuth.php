@@ -63,49 +63,18 @@
 <!-- ICONS -->
 
 
-<div class="wrapper">
-    <div class="header">
-        <h3 class="sign-in">Sign in</h3>
-        <a href="/register" class="button">
-            Register
-        </a>
+<div class="wrapper" style="width: fit-content;">
+    <div class="header" style="width: 1000px;color: white; text-align: center">
+        <h1 style="font-size: 50px">
+            Incorrect login or password
+        </h1>
+        <h1 style="font-size: 50px; color: #e6b333; text-decoration: none">
+            <a href="/auth">TRY AGAIN</a>
+        </h1>
     </div>
-    <div class="clear"></div>
-    <form action="/auth" method="post" name="form">
-        <div>
-            <label class="user" for="text">
-                <svg viewBox="0 0 32 32">
-                    <g filter="">
-                        <use xlink:href="#man-people-user"></use>
-                    </g>
-                </svg>
-            </label>
-            <input class="user-input" type="text" name="name" id="name" placeholder="My name is"/>
-            <div class="error-message" style="color: white">
-                 <p id="name-err"></p>
-            </div>
-        </div>
-        <div>
-            <label class="lock" for="password">
-                <svg viewBox="0 0 32 32">
-                    <g filter="">
-                        <use xlink:href="#lock-locker"></use>
-                    </g>
-                </svg>
-            </label>
-            <input type="password" name="password" id="password" placeholder=""/>
-            <div class="error-message" style="color: white">
-                <p id="password-err"></p>
-            </div>
-        </div>
-        <div>
-            <input type="submit" value="Sign in"/>
-        </div>
-        <div class="clear"></div>
-    </form>
 </div>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="JS/Auth.js"></script>
+
 
 </body>
 </html>

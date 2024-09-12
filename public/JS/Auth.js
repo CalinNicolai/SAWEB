@@ -1,32 +1,44 @@
-$(function() {
-    $(".btn").click(function() {
-        $(".form-signin").toggleClass("form-signin-left");
-        $(".form-signup").toggleClass("form-signup-left");
-        $(".frame").toggleClass("frame-long");
-        $(".signup-inactive").toggleClass("signup-active");
-        $(".signin-active").toggleClass("signin-inactive");
-        $(".forgot").toggleClass("forgot-left");
-        $(this).removeClass("idle").addClass("active");
-    });
-});
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.forms['form'];
 
-$(function() {
-    $(".btn-signup").click(function() {
-        $(".nav").toggleClass("nav-up");
-        $(".form-signup-left").toggleClass("form-signup-down");
-        $(".success").toggleClass("success-left");
-        $(".frame").toggleClass("frame-short");
-    });
-});
+    form.addEventListener('submit', function(e) {
+        // Сбрасываем ошибки
+        var nameErr = document.getElementById('name-err');
+        var passwordErr = document.getElementById('password-err');
+        nameErr.innerHTML = '';
+        passwordErr.innerHTML = '';
 
-$(function() {
-    $(".btn-signin").click(function() {
-        $(".btn-animate").toggleClass("btn-animate-grow");
-        $(".welcome").toggleClass("welcome-left");
-        $(".cover-photo").toggleClass("cover-photo-down");
-        $(".frame").toggleClass("frame-short");
-        $(".profile-photo").toggleClass("profile-photo-down");
-        $(".btn-goback").toggleClass("btn-goback-up");
-        $(".forgot").toggleClass("forgot-fade");
+        // Получаем значения полей
+        var name = document.getElementById('name').value;
+        var password = document.getElementById('password').value;
+
+        // Регулярное выражение для проверки наличия специальных символов
+        var invalidChars = /[!@#$%^&*(),.?":{}|<>]/g;
+
+        // Флаг для отмены отправки формы
+        var hasError = false;
+
+        // Проверка поля "name"
+        if (name === '') {
+            nameErr.innerHTML = 'Поле не может быть пустым';
+            hasError = true;
+        } else if (invalidChars.test(name)) {
+            nameErr.innerHTML = 'Недопустимые символы';
+            hasError = true;
+        }
+
+        // Проверка поля "password"
+        if (password === '') {
+            passwordErr.innerHTML = 'Поле не может быть пустым';
+            hasError = true;
+        } else if (invalidChars.test(password)) {
+            passwordErr.innerHTML = 'Недопустимые символы';
+            hasError = true;
+        }
+
+        // Если есть ошибки, отменяем отправку формы
+        if (hasError) {
+            e.preventDefault();
+        }
     });
 });

@@ -32,24 +32,37 @@ class AuthController
         include __DIR__ . '/../../Resources/Views/Auth.php';
     }
 
-// Пример метода в AuthController
     public function signIn()
     {
-        // Предполагаем, что данные из формы передаются таким образом
         $login = $_POST['name'];
         $password = $_POST['password'];
+
+        $invalidCharsPattern = '/[!@#$%^&*(),.?":{}|<>]/';
+
+        if (empty($login) || empty($password)) {
+            include __DIR__ . '/../../Resources/Views/IncorrectAuth.php';
+            exit();
+        }
+
+        if (preg_match($invalidCharsPattern, $login)) {
+            include __DIR__ . '/../../Resources/Views/IncorrectAuth.php';
+            exit();
+        }
+
+        if (preg_match($invalidCharsPattern, $password)) {
+            include __DIR__ . '/../../Resources/Views/IncorrectAuth.php';
+            exit();
+        }
 
         $user = $this->userRepository->login($login, $password);
 
         if ($user) {
-            // Успешная аутентификация
             $_SESSION['user_id'] = $user['id'];
 
             header('Location: /');
             exit();
         } else {
-            // Неверные учетные данные
-            echo "Invalid login or password.";
+            include __DIR__ . '/../../Resources/Views/IncorrectAuth.php';
         }
     }
 
@@ -58,7 +71,6 @@ class AuthController
         session_unset();
         session_destroy();
 
-        // Перенаправление на страницу авторизации
         header('Location: /auth');
         exit();
     }
