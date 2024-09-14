@@ -35,10 +35,16 @@ include __DIR__ . '/../../Resources/Components/navbar.php';
             <div class="form-group">
                 <label for="text_message">Message:</label>
                 <textarea class="form-control" id="text_message" name="text_message" rows="4" required></textarea>
+                <div class="error-message" style="color: red">
+                    <p id="message-err"></p>
+                </div>
             </div>
             <div class="form-group">
                 <label for="e_mail">Email:</label>
                 <input type="email" class="form-control" id="e_mail" name="e_mail" required>
+                <div class="error-message" style="color: red">
+                    <p id="email-err"></p>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -50,13 +56,22 @@ include __DIR__ . '/../../Resources/Components/navbar.php';
         foreach ($guests as $guest) {
             echo '<div class="card mb-4">';
             echo '<div class="card-body">';
-            echo '<h5 class="card-title">User: ' . $this->userRepository->find($guest['user'])['login'] . '</h5>';
-            echo '<p class="card-text">Message: ' . $guest['text_message'] . '</p>';
-            echo '<p class="card-text">Email: ' . $guest['e_mail'] . '</p>';
-            echo '<p class="card-text">Time: ' . $guest['data_time_message'] . '</p>';
+
+            $user = $this->userRepository->find($guest['user']);
+            if ($user) {
+                echo '<h5 class="card-title">User: ' . htmlspecialchars($user['login'], ENT_QUOTES, 'UTF-8') . '</h5>';
+            } else {
+                echo '<h5 class="card-title">User: Unknown</h5>';
+            }
+
+            echo '<p class="card-text">Message: ' . htmlspecialchars($guest['text_message'], ENT_QUOTES, 'UTF-8') . '</p>';
+            echo '<p class="card-text">Email: ' . htmlspecialchars($guest['e_mail'], ENT_QUOTES, 'UTF-8') . '</p>';
+            echo '<p class="card-text">Time: ' . htmlspecialchars($guest['data_time_message'], ENT_QUOTES, 'UTF-8') . '</p>';
+
             echo '</div>';
             echo '</div>';
         }
+
         ?>
     </div>
 </div>
