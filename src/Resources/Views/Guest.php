@@ -29,7 +29,6 @@ include __DIR__ . '/../../Resources/Components/navbar.php';
     <div class="mb-4 w-50">
         <form action="/guest" method="post">
             <div class="form-group">
-                <label for="user">Name:</label>
                 <input type="hidden" class="form-control" id="user" value="<?php echo $_SESSION['user_id']; ?>"
                        name="user" required>
             </div>
