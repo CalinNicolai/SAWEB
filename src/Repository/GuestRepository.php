@@ -38,4 +38,17 @@ class GuestRepository
             return [];
         }
     }
+
+    public function delete($commentId)
+    {
+        $stmt = $this->pdo->prepare('DELETE FROM guest WHERE id = :id');
+        $stmt->bindParam(':id', $commentId, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function deleteByUserId($userId){
+        $stmt = $this->pdo->prepare('DELETE FROM guest WHERE user = :user');
+        $stmt->bindParam(':user', $userId, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }

@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Calinn\Saweb\Http\Controllers\AdminController;
 use Calinn\Saweb\Router\Router;
 use Calinn\Saweb\Http\Controllers\AuthController;
 use Calinn\Saweb\Http\Controllers\HomeController;
@@ -12,6 +13,7 @@ define('BASEPATH', '/');
 
 $homeController = new HomeController();
 $authController = new AuthController();
+$adminController = new AdminController();
 
 Router::add('/', function () use ($homeController) {
     $homeController->index();
@@ -25,6 +27,10 @@ Router::add('/guest', function () use ($homeController) {
 }, 'post');
 Router::add('/accounts', function () use ($homeController) {
     $homeController->accounts();
+});
+
+Router::add('/admin', function () use ($adminController) {
+    $adminController->index();
 });
 
 Router::add('/auth', function () use ($authController) {
@@ -44,6 +50,15 @@ Router::add('/auth', function () use ($authController) {
 
 Router::add('/register', function () use ($authController) {
     $authController->signUp();
+}, 'post');
+
+// Добавляем маршруты для удаления аккаунтов и комментариев
+Router::add('/delete-account', function () use ($adminController) {
+    $adminController->deleteAccount();
+}, 'post');
+
+Router::add('/delete-comment', function () use ($adminController) {
+    $adminController->deleteComment();
 }, 'post');
 
 Router::pathNotFound(function ($path) {

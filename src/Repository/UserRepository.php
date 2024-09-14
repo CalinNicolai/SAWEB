@@ -10,10 +10,12 @@ use PDOException;
 class UserRepository
 {
     private $pdo;
+    private GuestRepository $guestRepository;
 
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
+        $this->guestRepository = new GuestRepository($pdo);
     }
 
     // Создание пользователя
@@ -95,6 +97,7 @@ class UserRepository
     public function delete(int $id): bool
     {
         try {
+            $this->guestRepository->deleteByUserId($id);
             $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();
@@ -105,7 +108,6 @@ class UserRepository
         }
     }
 
-    // Обновление пользователя по ID
     public function update(int $id, string $fullname, string $email, string $password): bool
     {
         try {
