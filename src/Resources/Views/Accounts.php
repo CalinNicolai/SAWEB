@@ -16,14 +16,38 @@
         .container {
             margin-top: 20px;
         }
+
+        table {
+            background-color: #495057; /* Темно-серый фон таблицы */
+        }
+
+        th, td {
+            color: #ffffff; /* Белый текст в таблице */
+        }
     </style>
 </head>
 <body>
 <?php
 include __DIR__ . '/../../Resources/Components/navbar.php';
 ?>
-<div class="container">
-    <h1 class="text-center mb-4">Welcome</h1>
+<div class="container" style="display: flex;flex-direction: column;">
+    <h1 class="text-center mb-4">Users</h1>
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Login</th>
+            <th scope="col">Created At</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($users as $user): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($user['login']); ?></td>
+                <td><?php echo htmlspecialchars($user['created_at']); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
 <!-- Подключение Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

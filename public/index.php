@@ -17,6 +17,16 @@ Router::add('/', function () use ($homeController) {
     $homeController->index();
 });
 
+Router::add('/guest', function () use ($homeController) {
+    $homeController->guest();
+});
+Router::add('/guest', function () use ($homeController) {
+    $homeController->guestHandle();
+}, 'post');
+Router::add('/accounts', function () use ($homeController) {
+    $homeController->accounts();
+});
+
 Router::add('/auth', function () use ($authController) {
     $authController->index();
 });
